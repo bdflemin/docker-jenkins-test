@@ -1,0 +1,16 @@
+FROM debian:latest
+
+LABEL maintainer=bryan.fleming@gmail.com
+
+RUN apt update && apt upgrade \
+    apt install -qy git && \
+    apt install -qy openssh-server && \
+    apt install -qy openjdk-17-jdk && \
+    apt -qy autoremove && \
+    adduser --quiet jenkins && \
+    echo "jenkins:jenkins" | chpasswd
+    
+
+EXPOSE 22
+
+CMD ["/usr/sbin/sshd", "-D"]
